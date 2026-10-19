@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Newtonite Ops{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'operations/style.css' %}">
+</head>
+<body>
+<div class="app-shell">
+  {% if user.is_authenticated %}
+  <aside class="sidebar">
+    <a class="brand" href="{% url 'dashboard' %}"><span class="brand-mark">N</span><span>newtonite<span class="brand-sub">OPERATIONS</span></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">▦ &nbsp; Overview</a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'task_list' %}active{% endif %}" href="{% url 'task_list' %}">☷ &nbsp; All work items</a>
+    <a class="nav-link" href="{% url 'task_create' %}">＋ &nbsp; Create task</a>
+    <div class="sidebar-bottom"><div class="avatar">{{ user.username|first|upper }}</div><div class="user-meta"><strong>{{ user.username }}</strong><small>{% if user.is_superuser %}Administrator{% else %}Team member{% endif %}</small></div><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="logout" title="Log out">↗</button></form></div>
+  </aside>
+  {% endif %}
+  <main class="main-area">
+    {% if user.is_authenticated %}<header class="topbar"><div><span class="crumb">Workspace</span><span class="crumb-sep">/</span><strong>{% block page_name %}Overview{% endblock %}</strong></div><div class="top-right"><span class="status-dot"></span> System operational <span class="top-avatar">{{ user.username|first|upper }}</span></div></header>{% endif %}
+    <section class="content">
+      {% for message in messages %}<div class="flash {{ message.tags }}">{{ message }}</div>{% endfor %}
+      {% block content %}{% endblock %}
+    </section>
+  </main>
+</div>
+</body>
+</html>

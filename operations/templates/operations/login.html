@@ -1,0 +1,114 @@
+
+
+{% extends "operations/base.html" %}
+
+{% block content %}
+<div class="nt-login-page">
+    <section class="nt-brand-panel">
+        <div class="nt-brand">
+            <div class="nt-logo">N</div>
+            <div>
+                <h2>Newtonite</h2>
+                <span>OPERATIONS</span>
+            </div>
+        </div>
+
+        <div class="nt-brand-message">
+            <p class="nt-eyebrow">YOUR WORKSPACE</p>
+            <h1>Operations,<br>
+                <span>made simpler.</span>
+            </h1>
+            <p>A smarter workspace for your team.</p>
+        </div>
+
+        <div class="nt-brand-footer">
+            Secure. Simple. Efficient.
+        </div>
+    </section>
+
+    <section class="nt-form-panel">
+        <div class="nt-login-card">
+            <div class="nt-mobile-logo">N</div>
+
+            <p class="nt-welcome">WELCOME BACK</p>
+            <h1>Sign in to Newtonite</h1>
+            <p class="nt-subtitle">
+                Enter your credentials to continue.
+            </p>
+
+            {% if form.errors %}
+                <div class="nt-error">
+                    Invalid username or password.
+                    Please try again.
+                </div>
+            {% endif %}
+
+            {% if next %}
+                <form method="post" action="{% url 'login' %}?next={{ next|urlencode }}">
+            {% else %}
+                <form method="post" action="{% url 'login' %}">
+            {% endif %}
+                {% csrf_token %}
+
+                <div class="nt-field">
+                    <label for="id_username">Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="id_username"
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                        value="{{ form.username.value|default:'' }}"
+                        required
+                        autofocus>
+                </div>
+
+                <div class="nt-field">
+                    <label for="id_password">Password</label>
+                    <div class="nt-password-wrap">
+                        <input
+                            type="password"
+                            name="password"
+                            id="id_password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="nt-toggle"
+                            onclick="togglePassword()"
+                            aria-label="Show password">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="nt-submit">
+                    Sign in <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <div class="nt-security">
+                <span>✓</span>
+                Secure access to your workspace
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+function togglePassword() {
+    const password = document.getElementById("id_password");
+    const button = document.querySelector(".nt-toggle");
+    const isHidden = password.type === "password";
+
+    password.type = isHidden ? "text" : "password";
+    button.textContent = isHidden ? "Hide" : "Show";
+    button.setAttribute(
+        "aria-label",
+        isHidden ? "Hide password" : "Show password"
+    );
+}
+</script>
+{% endblock %}

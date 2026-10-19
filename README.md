@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Newtonite Operations — Working Challenge Project
 
 A practical full-stack work-item management app inspired by the Newtonite Software Engineering Challenge. Built with Django templates, Python, and SQLite so it can be run locally quickly on Windows. It includes authentication, teams, task ownership, priority/status, search/filtering, comments, activity history, a JSON API, and tests.
@@ -64,3 +65,7 @@ See [ENGINEERING_DECISIONS.md](ENGINEERING_DECISIONS.md).
 - Demo credentials are public to anyone with this ZIP. Change or remove them before deployment.
 - `DEBUG=True` and the development secret key are for local use only. Set secure environment-based settings before deployment.
 - The claim endpoint enforces a single winner using a conditional database update; automated race tests should also be run against the production database.
+=======
+# Newtonite-operations
+Django-based Operations and Task Management System
+>>>>>>> ffc280d2a9b24c779ae6c17c1ab56697f917eeeb
